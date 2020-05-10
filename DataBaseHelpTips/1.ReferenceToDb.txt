@@ -1,0 +1,13 @@
+/*
+* В этих строка создается уведомление
+* Toast, которое на несколько секунд отображает 
+* сообщение "Database unavailable"
+*/
+SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(this);
+try{
+	SQLiteDatabase db = starbuzzDatabaseHelper.getReadableDatabase();
+	//Код чтения из бд
+
+}catch(SQLiteException e){
+	Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+	toast.show(); //уведомление выводится на экран

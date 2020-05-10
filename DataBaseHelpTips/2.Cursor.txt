@@ -1,0 +1,38 @@
+/*
+* Курсор берет записи из таблицы
+* и мы можем ими пользоваться
+* Курсор создается методом query() класса SQLiteDatabase
+*/
+Cursor cursor = db.query(...); //... -> перечисляются параметры метода query()
+
+1. Выборка всех записей из таблицы
+Cursor = cursor = db.query("DRINK", new String[] {"_id", "NAME", "DESCRIPTION"}, null, null, null, null, null); 
+						         //Возвращаются значения //->если нужно вернуть все записи таблицы - передать в параметрах null
+							    этих столбцов	
+Cursor cursor = db.query("TABLE_NAME", new String[] {"COLUMN1", "COLUMN2"}, null, null, null, null, null);
+
+2. Упорядочение данных в запросах
+Cursor cursor = db.query("DRINK", new String[] {"_id", "NAME", "FAVORITE"}, null, null, null, null, "NAME ASC");
+//Упорядочение данных по возрастанию NAME. По убыванию -> DESC
+Cursor cursor = db.query("DRINK", new String[] {"_id", "NAME", "FAVORITE"}, null, null, null, null, "FAVORITE DESC, NAME");
+//Упорядочение по убыванию favorite , затем по возрастанию name
+
+3. Выборка по условию
+Cursor cursor = db.query("DRINK", new String[] {"_id", "NAME", "DESCRIPTION"},"NAME = ?", new String[] {"Latte"}, null, null, null);
+//3 и 4 параметры описывают условия, которым должны удовлетворять данные
+Cursor cursor = db.query("DRINK", new String[] {"_id", "NAME", "DESCRIPTION"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
+___________________________________________________________
+Загрузка из б.д. названия, описания, идентификатора ресурса изображения для напитка, переданного в интенте.
+int drinkId = (Integer) getIntent.getExtras().get(EXTRA_DRINKID);
+
+//Создание курсора
+SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(this);
+try{
+	SQLiteDatabaseHelper db = starbuzzDatabaseHelper.getReadableDatabase();
+	Cursor cursos = db.query("DRINK", new String[] {"NAME", "DESCRIPTION", "IMAGE_RESOURCE_ID", "_id = ?", new String[] {Integer.toString(drinkId)}, null, null, null);
+}catch(SQLiteException e){
+	Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+	toast.show();
+}
+...
+все это добавляется в метод, который будет брать данные из б.д.
