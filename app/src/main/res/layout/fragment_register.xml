@@ -1,118 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".RegisterFragment">
+    tools:context=".RegisterFragment"
+    android:background="@color/colorBackground"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tv_logo"
-        android:layout_width="wrap_content"
+
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="60dp"/>
-
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tag"
-        android:textSize="17sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"/>
-
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/your_name"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:padding="15dp"
-        android:inputType="textPersonName"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/e_mail"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:padding="15dp"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:padding="15dp"
-        android:inputType="textPassword"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/et_repassword"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/re_type_password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="15dp"
-        android:inputType="textPassword"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/btn_custom"
-            android:onClick="onRegisterButtonClick"
-            android:text="@string/register"
-            android:textColor="@android:color/white" />
+        android:stretchColumns="1" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_arrow_left"
-            android:layout_above="@id/swipeLeft"
-            android:layout_centerHorizontal="true"/>
+            android:id="@+id/logo_big"
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:layout_above="@+id/textInputLayoutPhoneNumber"
+            android:layout_gravity="top"
+            android:src="@drawable/logo_big" />
 
-        <TextView
-            android:id="@+id/swipeLeft"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPhoneNumber"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/swipe_right_for_login"
-            android:textSize="15sp"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="-70dp"
+            android:layout_marginTop="30dp"
+            android:textColorHint="@color/colorLightFont"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_corner"
+                android:fontFamily="@font/montserrat_light"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:paddingStart="20dp"
+                android:textColor="@color/colorLightFont"
+                android:textSize="22sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textInputLayoutPhoneNumber"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="@color/colorLightFont"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorLightFont">
 
-    </RelativeLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_corner"
+                android:fontFamily="@font/montserrat_light"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:textColor="@color/colorLightFont"
+                android:textSize="22sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textInputLayoutPassword"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingTop="10dp"
+            android:textColorHint="@color/colorLightFont"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_corner"
+                android:fontFamily="@font/montserrat_light"
+                android:hint="@string/street"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:textColor="@color/colorLightFont"
+                android:textSize="22sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textInputLayoutStreet"
+            android:id="@+id/house_apartment"
+            android:gravity="center_horizontal" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutHouseNumber"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textColorHint="@color/colorLightFont"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_house_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_corner"
+                    android:fontFamily="@font/montserrat_light"
+                    android:hint="@string/house_number"
+                    android:inputType="text"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/colorLightFont"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutApartment"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textInputLayoutHouseNumber"
+                android:paddingTop="10dp"
+                android:layout_marginStart="150dp"
+                android:textColorHint="@color/colorLightFont"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_apartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_corner"
+                    android:fontFamily="@font/montserrat_light"
+                    android:hint="@string/apartment"
+                    android:inputType="numberSigned"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/colorLightFont"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/house_apartment"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/round_corner"
+            android:onClick="onRegisterButtonClick"
+            android:text="@string/sign_up"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textSize="25sp"
+            android:textColor="@color/colorMainFont" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/swipeRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/swipe_right_for_sign_in"
+                android:fontFamily="@font/montserrat_light"
+                android:textSize="15sp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/colorLightFont"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </TableLayout>
+
+</ScrollView>
