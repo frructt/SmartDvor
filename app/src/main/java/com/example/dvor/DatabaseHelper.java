@@ -1,6 +1,7 @@
 package com.example.dvor;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,13 +10,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import androidx.fragment.app.Fragment;
+import com.example.smartdvor.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "info.db"; //Database name
     private static String DB_PATH = ""; //Path to db
     private static final int DB_VERSION = 1; //Database version
 
-    private SQLiteDatabase mDataBase;
+
+    public static SQLiteDatabase mDataBase;//static
     private final Context mContext;
     private boolean mNeedUpdate = false;
 
@@ -64,15 +68,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
 //            //NUMERIC -> добавление числового столбца
 //        }
-    }
-    private static void insertClientsData(SQLiteDatabase db, String phoneNumber, String password, String street, String houseNumber, int apartNumber){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("PHONENUMBER", phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
-        contentValues.put("PASSWORD", password);
-        contentValues.put("STREET", street);
-        contentValues.put("HOUSENUMBER", houseNumber);
-        contentValues.put("APARTNUMBER", apartNumber);
-        db.insert("CLIENTS", null, contentValues); //кладем в таблицу наши поля.
     }
 
     private boolean checkDataBase() {
@@ -128,5 +123,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mNeedUpdate = true;
     }
 
+    //Добавить нового пользователя в б.д.
+    public static void insertClientsData(User user) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("PHONENUMBER", user.phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
+        contentValues.put("PASSWORD", user.password);
+        contentValues.put("STREET", user.street);
+        contentValues.put("HOUSENUMBER", user.houseNumber);
+        contentValues.put("APARTNUMBER", user.apartNumber);
+        mDataBase.insert("CLIENTS", null, contentValues); //кладем в таблицу наши поля.
+    }
 
+    //Метод, который возвращает данные в проект
+    public void proverka(User user){
+        String phoneNumber = user.phoneNumber;
+        String password = user.password;
+        Cursor cursor = mDataBase.query("CLIENTS", new String[]{"PHONENUMBER","PASSWORD"},"PHONENUMBER=?",new String[]{user.phoneNumber}, null, null, null);
+    }
 }
+
+//    public static void insertClientsData(SQLiteDatabase db, String phoneNumber, String password, String street, String houseNumber, int apartNumber){
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("PHONENUMBER", phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
+//        contentValues.put("PASSWORD", password);
+//        contentValues.put("STREET", street);
+//        contentValues.put("HOUSENUMBER", houseNumber);
+//        contentValues.put("APARTNUMBER", apartNumber);
+//        db.insert("CLIENTS", null, contentValues); //кладем в таблицу наши поля.
+//    }
+//    public static void insertClientsData(User user) {
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("PHONENUMBER", user.phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
+//        contentValues.put("PASSWORD", user.password);
+//        contentValues.put("STREET", user.street);
+//        contentValues.put("HOUSENUMBER", user.houseNumber);
+//        contentValues.put("APARTNUMBER", user.apartNumber);
+//    //        db.insert("CLIENTS", null, contentValues); //кладем в таблицу наши поля.
+//        // mDataBase.insert("CLIENTS", null, contentValues); //кладем в таблицу наши поля.
+//    }
