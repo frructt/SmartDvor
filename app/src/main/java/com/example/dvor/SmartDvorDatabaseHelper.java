@@ -100,11 +100,41 @@ SmartDvorDatabaseHelper smartDvorDatabaseHelper = new SmartDvorDatabaseHelper(th
 try{
     SQLiteDatabase db = SmartDvorDatabaseHelper.getReadableDatabase();
     //Код чтения данных из базы
+    Cursor cursor = mDb.query("CLIENTS", new String[] {"_id", "phoneNumber", "password","street","houseNumber","apartNumber"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
+    cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    product += cursor.getString(0) + " | ";
+                    product1 += cursor.getString(1) + " | ";
+                    textView.setText(product);
+                    textView1.setText(product1);
+                    cursor.moveToNext();
+                }
+     cursor.close();
     } catch(SQLiteException){
     Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
     toast.show(); //в этой строке уведомление выводится на экран
 }
  */
+/*
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String product = "";
+                String product1 = "";
+                Cursor cursor = mDb.query("CLIENTS", new String[] {"_id", "phoneNumber", "password","street","houseNumber","apartNumber"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    product += cursor.getString(0) + " | ";
+                    product1 += cursor.getString(1) + " | ";
+                    textView.setText(product);
+                    textView1.setText(product1);
+                    cursor.moveToNext();
+                }
+                cursor.close();
+                           }
+        });
+    }
+*/
 /*
 *   Для обновления данных необходимо заново создать ContentValues
 *   и положить в него то поле, которое необходимо обновить, а далее применить метод update()
