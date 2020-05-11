@@ -13,7 +13,7 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dvor"; //Database name
     private static final int DB_VERSION = 1 ;     //Database version
 
-    SmartDvorDatabaseHelper(Context context){
+    public SmartDvorDatabaseHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -67,24 +67,40 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
         if(oldVersion < 1){
             db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " PHONENUMBER TEXT, " +
+                    "PHONENUMBER TEXT, " +
                     "PASSWORD TEXT, " +
-                    "STREET TEXT,"+
+                    "STREET TEXT, "+
                     "HOUSENUMBER TEXT, "+
                     "APARTNUMBER TEXT);");
 //            insertProfilesData(db, "Latte", "Espresso and steamed milk", R.drawable.background_splash);
-            insertClientsData(db, "+71234567890", "User111", "Pushlinskaya","1", "1");
+//            insertClientsData(db, "+71234567890", "User111", "Pushlinskaya","1", "1");
         }
-        if(oldVersion < 2){
-            /*
-                *   Код добавления нового столбца
-                *   Этот код выполняется, в том случае,
-                *   если у пользователя уже установлена
-                *   версия 1 б.д.
-            */
-            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
-            //NUMERIC -> добавление числового столбца
+
+        if(oldVersion == 1){
+            db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "PHONENUMBER TEXT, " +
+                    "PASSWORD TEXT, " +
+                    "STREET TEXT, "+
+                    "HOUSENUMBER TEXT, "+
+                    "APARTNUMBER TEXT);");
         }
+
+//        if(oldVersion < 2){
+//            /*
+//                *   Код добавления нового столбца
+//                *   Этот код выполняется, в том случае,
+//                *   если у пользователя уже установлена
+//                *   версия 1 б.д.
+//            */
+////            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
+//            db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                    "PHONENUMBER TEXT, " +
+//                    "PASSWORD TEXT, " +
+//                    "STREET TEXT, "+
+//                    "HOUSENUMBER TEXT, "+
+//                    "APARTNUMBER TEXT);");
+//            //NUMERIC -> добавление числового столбца
+//        }
     }
     public void getAllDataAboutUser(){
 
@@ -100,7 +116,7 @@ SmartDvorDatabaseHelper smartDvorDatabaseHelper = new SmartDvorDatabaseHelper(th
 try{
     SQLiteDatabase db = SmartDvorDatabaseHelper.getReadableDatabase();
     //Код чтения данных из базы
-    Cursor cursor = mDb.query("CLIENTS", new String[] {"_id", "phoneNumber", "password","street","houseNumber","apartNumber"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
+    Cursor cursor = db.query("CLIENTS", new String[] {"_id", "phoneNumber", "password","street","houseNumber","apartNumber"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
     cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     product += cursor.getString(0) + " | ";

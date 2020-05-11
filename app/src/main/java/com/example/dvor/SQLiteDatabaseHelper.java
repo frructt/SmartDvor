@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "info.db";
@@ -105,7 +107,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         return myDataBase.query("EMP_TABLE", null, null, null, null, null, null);
     }
 
-    public boolean insertClientsData(String phoneNumber, String password, String street, String houseNumber, int apartNumber) {
+    public boolean insertClientsData(String phoneNumber, String password, String street, String houseNumber, String apartNumber) {
         myDataBase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("phoneNumber", phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
