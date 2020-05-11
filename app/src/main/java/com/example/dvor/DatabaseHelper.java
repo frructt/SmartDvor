@@ -126,6 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Добавить нового пользователя в б.д.
     public void insertClientsData(User user) {
         ContentValues contentValues = new ContentValues();
+        mDataBase = this.getWritableDatabase();
         contentValues.put("PHONENUMBER", user.phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
         contentValues.put("PASSWORD", user.password);
         contentValues.put("STREET", user.street);

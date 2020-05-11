@@ -19,8 +19,7 @@ public class User {
     public String getPassword(){
         return password;
     }
-    public User(String id, String phoneNumber, String password, String street, String houseNumber, String apartNumber) {
-        this.id = id;
+    public User(String phoneNumber, String password, String street, String houseNumber, String apartNumber) {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.street = street;

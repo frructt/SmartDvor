@@ -21,7 +21,7 @@
             android:src="@drawable/logo_big" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutPhoneNumber"
+            android:id="@+id/textInputLayoutSignInPhoneNumber"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/textInputLayoutPassword"
@@ -33,7 +33,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phoneNumber"
+                android:id="@+id/et_signin_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/round_corner"
@@ -46,7 +46,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutPassword"
+            android:id="@+id/textInputLayoutSignInPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -60,7 +60,7 @@
             app:passwordToggleTint="@color/colorLightFont">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_signin_password"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:paddingStart="20dp"
@@ -73,15 +73,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_signin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textInputLayoutPassword"
+            android:layout_below="@id/textInputLayoutSignInPassword"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="75dp"
             android:layout_marginRight="100dp"
             android:background="@drawable/round_corner"
-            android:onClick="onLoginButtonClick"
             android:text="@string/sign_in"
             android:fontFamily="@font/montserrat_semibold"
             android:textSize="25sp"
