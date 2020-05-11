@@ -9,6 +9,16 @@ public class User {
     public String houseNumber;
     public String apartNumber;
 
+    public void setRegistration(String phoneNumber, String password){
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+    public String getPhoneNumber(){
+        return phoneNumber;
+    }
+    public String getPassword(){
+        return password;
+    }
     public User(String id, String phoneNumber, String password, String street, String houseNumber, String apartNumber) {
         this.id = id;
         this.phoneNumber = phoneNumber;

@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import androidx.fragment.app.Fragment;
+
 import com.example.smartdvor.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -124,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Добавить нового пользователя в б.д.
-    public static void insertClientsData(User user) {
+    public void insertClientsData(User user) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("PHONENUMBER", user.phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
         contentValues.put("PASSWORD", user.password);
@@ -135,10 +135,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Метод, который возвращает данные в проект
-    public void proverka(User user){
-        String phoneNumber = user.phoneNumber;
-        String password = user.password;
+    public boolean proverka(User user){
+        //String phoneNumber = user.phoneNumber;
+        String phoneNumber = user.getPhoneNumber();
+        //String password = user.password;
+        String password = user.getPassword();
+        String data1 = null;
+        String data2 = null;
         Cursor cursor = mDataBase.query("CLIENTS", new String[]{"PHONENUMBER","PASSWORD"},"PHONENUMBER=?",new String[]{user.phoneNumber}, null, null, null);
+        if(cursor.moveToFirst()){
+            //Получение данных
+            data1 = cursor.getString(0);
+            data2 = cursor.getString(1);
+        }
+        cursor.close();
+        if(phoneNumber.equals(data1)){
+            if (password.equals(data2)){
+                return true;
+            } else {return false;}
+        }else{return false;}
+    }
+
+    public <T> T getAllDataClients(User user){
+        T t = null;
+        String testPhoneNumber="+79299323716";
+        Cursor cursor = mDataBase.query("CLIENTS", new String[]{"PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"},
+                "PHONENUMBER=?",new String[]{testPhoneNumber},
+                null, null, null);
+        if(cursor.moveToFirst()){
+
+        }
+        return t;
     }
 }
 
