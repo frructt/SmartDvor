@@ -2,25 +2,28 @@ package com.example.dvor;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.smartdvor.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 //Тестовый класс. Бд создается внутри и здесь же она удаляется после работы.
 
 public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "dvor"; //Database name
-    private static final int DB_VERSION = 1 ;     //Database version
+    private static final int DB_VERSION = 1;     //Database version
 
-    public SmartDvorDatabaseHelper(Context context){
+    public SmartDvorDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     //Метод onCreate вызывается при первоначальном создании базы данных
     //мы используем его для создания таблицы и вставки данных
     @Override
-    public void onCreate(SQLiteDatabase db){
+    public void onCreate(SQLiteDatabase db) {
        /*
        //db.execSQL("CREATE TABLE DRINK (_id INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, IMAGE_TESOURCE_ID INTEGER);");
        // insertProfilesData(db, "UserName", "Some Info about Me", R.drawable.ic_launcher_background); //Метод, где происходит добавление данных в базу данных.
@@ -29,20 +32,20 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Данный метод выдается, когда возникает необходимость в обновлении базы данных.
         updateMyDatabase(db, 0, DB_VERSION);
     }
 
 
     /*
-         *Метод, в котором будет происходить постоянное добавление данных
-         *Суть: пользователь кидает какие то поля данных, мы их принимаем
-         * и закидываем в этот класс. Здесь в этом классе будет вызываться база данных и соответственно в нее
-         *помещаться данные.
-         *Все входные данные являются шаблонными. Необходимо разработать примерное видение и менять параметры
-         *Дедлайн на определение базы данных - пятница 1 мая.
-    */
+     *Метод, в котором будет происходить постоянное добавление данных
+     *Суть: пользователь кидает какие то поля данных, мы их принимаем
+     * и закидываем в этот класс. Здесь в этом классе будет вызываться база данных и соответственно в нее
+     *помещаться данные.
+     *Все входные данные являются шаблонными. Необходимо разработать примерное видение и менять параметры
+     *Дедлайн на определение базы данных - пятница 1 мая.
+     */
 //    private static void insertProfilesData(SQLiteDatabase db, String name, String description, int resourceId){
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put("NAME", name); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
@@ -58,54 +61,111 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("houseNumber", houseNumber);
         contentValues.put("apartNumber", apartNumber);
         long result = db.insert("clients", null, contentValues); //кладем в таблицу наши поля.
-        if(result == -1){
+        if (result == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
-        if(oldVersion < 1){
+
+    private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 1) {
             db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "PHONENUMBER TEXT, " +
                     "PASSWORD TEXT, " +
-                    "STREET TEXT, "+
-                    "HOUSENUMBER TEXT, "+
+                    "STREET TEXT, " +
+                    "HOUSENUMBER TEXT, " +
                     "APARTNUMBER TEXT);");
 //            insertProfilesData(db, "Latte", "Espresso and steamed milk", R.drawable.background_splash);
 //            insertClientsData(db, "+71234567890", "User111", "Pushlinskaya","1", "1");
         }
 
-        if(oldVersion == 1){
+//        if (oldVersion == 1) {
+//            db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                    "PHONENUMBER TEXT, " +
+//                    "PASSWORD TEXT, " +
+//                    "STREET TEXT, " +
+//                    "HOUSENUMBER TEXT, " +
+//                    "APARTNUMBER TEXT);");
+//        }
+/*
+        if(oldVersion < 2){
+            //
+            //                *   Код добавления нового столбца
+            //                *   Этот код выполняется, в том случае,
+            //                *   если у пользователя уже установлена
+            //                *   версия 1 б.д.
+            //
+            //            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
             db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "PHONENUMBER TEXT, " +
                     "PASSWORD TEXT, " +
                     "STREET TEXT, "+
                     "HOUSENUMBER TEXT, "+
                     "APARTNUMBER TEXT);");
+            //NUMERIC -> добавление числового столбца
         }
+        */
 
-//        if(oldVersion < 2){
-//            /*
-//                *   Код добавления нового столбца
-//                *   Этот код выполняется, в том случае,
-//                *   если у пользователя уже установлена
-//                *   версия 1 б.д.
-//            */
-////            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
-//            db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-//                    "PHONENUMBER TEXT, " +
-//                    "PASSWORD TEXT, " +
-//                    "STREET TEXT, "+
-//                    "HOUSENUMBER TEXT, "+
-//                    "APARTNUMBER TEXT);");
-//            //NUMERIC -> добавление числового столбца
-//        }
     }
-    public void getAllDataAboutUser(){
 
+    public boolean checkCorrectUsersAuthentificationData(SQLiteDatabase db, String phoneNumber, String password) {
+        //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getWritableDatabase();
+        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "NAME=?", new String[]{phoneNumber,password}, null, null, null);
+        cursor.moveToFirst();
+        if (phoneNumber.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
+    }
+
+    public Map<String, String> getAllUserDataInformation(SQLiteDatabase db, String phoneNumber, String password){
+        //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getReadableDatabase();
+        String _id = null;
+        String street = null;;
+        String houseNumber = null;;
+        String apartNumber = null;;
+        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            _id = cursor.getString(0);
+            phoneNumber = cursor.getString(1);
+            password = cursor.getString(2);
+            street = cursor.getString(3);
+            houseNumber = cursor.getString(4);
+            apartNumber = cursor.getString(5);
+        }
+//        HashMap<String, Integer> myHashMap = new HashMap<String, Integer>(){{
+//            put("a", 0);
+//            put("b", 20);
+//            put("d", 30);
+//            put("c", 40);
+//        }};
+        Map<String, String> getAllData = new HashMap<String, String>();
+        getAllData.put("_id",_id );
+        getAllData.put("PHONENUMBER",phoneNumber);
+        getAllData.put("PASSWORD",password);
+        getAllData.put("STREET",street);
+        getAllData.put("HOUSENUMBER",houseNumber);
+        getAllData.put("APARTNUMBER",apartNumber);
+        cursor.close();
+        //Возвращается map
+        return getAllData;
     }
 }
+
+/*
+* Выборка всех данных из таблицы
+* Cursor cursor = db.query("CLIENTS", new String[] {_id,PHONENUMBER,PASSWORD,STREET,HOUSENUMBER,APARTNUMBER}, null, null, null, null, null,)
+* Выборка по условию (вернуть номер телефона и пароль по телефону)
+* Cursor cursor = db.query("CLIENTS", new String[] {PHONENUMBER,PASSWORD}, "NAME=?", new String[] {user.phoneNumber}, null, null, null,)
+* if(cursor.moveToFirst()){
+* String phoneNumber = cursor.getString(0);
+* String password = cursor.getString(0);
+* }
+*/
 /*
 Андрей. Это тебе надо вставить в код, откуда ты будешь брать б.д.
 SmartDvorDatabaseHelper smartDvorDatabaseHelper = new SmartDvorDatabaseHelper(this);
