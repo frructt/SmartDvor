@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.smartdvor.R;
+import com.example.smartdvor.RegisterFragment;
 
 //Тестовый класс. Бд создается внутри и здесь же она удаляется после работы.
 

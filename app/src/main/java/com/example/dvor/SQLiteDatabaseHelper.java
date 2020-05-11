@@ -15,14 +15,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class SQLiteDatabaseHelper extends SQLiteOpenHelper {
+public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
+    private static String DB_NAME = "info.db";
     String DB_PATH = null;
-    private static String DB_NAME = "info";
+    private static int DB_VERSION = 1;
+//    private static String DB_NAME = "info";
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
     public SQLiteDatabaseHelper(Context context) {
-        super(context, DB_NAME, null, 10);
+        super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
         this.DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
         Log.e("Path 1", DB_PATH);
@@ -103,15 +105,15 @@ class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         return myDataBase.query("EMP_TABLE", null, null, null, null, null, null);
     }
 
-    public boolean insertClientsData(User user) {
+    public boolean insertClientsData(String phoneNumber, String password, String street, String houseNumber, int apartNumber) {
         myDataBase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("phoneNumber", user.phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
-        contentValues.put("password", user.password);
-        contentValues.put("street", user.street);
-        contentValues.put("houseNumber", user.houseNumber);
-        contentValues.put("apartNumber", user.apartNumber);
-        long result = myDataBase.insert("CLIENTS", null, contentValues); //кладем в таблицу наши поля.
+        contentValues.put("phoneNumber", phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
+        contentValues.put("password", password);
+        contentValues.put("street", street);
+        contentValues.put("houseNumber", houseNumber);
+        contentValues.put("apartNumber", apartNumber);
+        long result = myDataBase.insert("clients", null, contentValues); //кладем в таблицу наши поля.
         if(result == -1){
             return false;
         }else{
