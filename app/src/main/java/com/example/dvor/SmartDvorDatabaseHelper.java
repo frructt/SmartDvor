@@ -109,17 +109,47 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean checkCorrectUsersAuthentificationData(SQLiteDatabase db, String phoneNumber, String password) {
+//    public boolean checkCorrectUsersAuthentificationData(SQLiteDatabase db, String phoneNumber, String password) {
+//        //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getWritableDatabase();
+//        String dbPhone = null;
+//        String dbPass = null;
+//        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber,password}, null, null, null);
+//        if(cursor.moveToFirst()){
+//            dbPhone = cursor.getString(0);
+//            dbPass = cursor.getString(1);
+//        }
+////        if (phoneNumber.equals(dbPhone) && password.equals(dbPass)) {
+////            cursor.close();
+////            return true;
+////        } else {
+////            cursor.close();
+////            return false;
+////        }
+//
+//    }
+    public Map<String, String> checkCorrectUsersAuthentificationData(SQLiteDatabase db, String phoneNumber, String password) {
         //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getWritableDatabase();
+        String dbPhone = null;
+        String dbPass = null;
         Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber,password}, null, null, null);
-        cursor.moveToFirst();
-        if (phoneNumber.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
-            cursor.close();
-            return true;
-        } else {
-            cursor.close();
-            return false;
+        if(cursor.moveToFirst()){
+            dbPhone = cursor.getString(0);
+            dbPass = cursor.getString(1);
         }
+//        if (phoneNumber.equals(dbPhone) && password.equals(dbPass)) {
+//            cursor.close();
+//            return true;
+//        } else {
+//            cursor.close();
+//            return false;
+//        }
+        Map<String, String> getAllData = new HashMap<String, String>();
+        getAllData.put("PHONENUMBER",dbPhone );
+        getAllData.put("PASSWORD",dbPass );
+        cursor.close();
+        //Возвращается map
+        return getAllData;
+
     }
 
     public Map<String, String> getAllUserDataInformation(SQLiteDatabase db, String phoneNumber, String password){
