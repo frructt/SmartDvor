@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -38,17 +39,16 @@ import java.util.Objects;
 
 public class LoginFragment extends Fragment {
 
-    TextView txtv1;
-    TextView txtv2;
+    private TextView txtv1;
+    private TextView txtv2;
 
-    EditText editTextPhoneNumber;
-    EditText editTextPassword;
+    private EditText editTextPhoneNumber;
+    private EditText editTextPassword;
 
-    Button btnLogin;
-    Button btnShow;
+    private Button btnLogin;
 
-    TextInputLayout textInputLayoutPhoneNumber;
-    TextInputLayout textInputLayoutPassword;
+//    TextInputLayout textInputLayoutPhoneNumber;
+//    TextInputLayout textInputLayoutPassword;
 
 //    DatabaseHelper databaseHelper;
 //
@@ -79,46 +79,27 @@ public class LoginFragment extends Fragment {
         editTextPassword = rootView.findViewById(R.id.et_signin_password);
 
         btnLogin = rootView.findViewById(R.id.btn_signin);
-        btnShow = rootView.findViewById(R.id.btn_show);
-
-//        textInputLayoutPhoneNumber = rootView.findViewById(R.id.textInputLayoutSignInPassword);
-//        textInputLayoutPassword = rootView.findViewById(R.id.textInputLayoutSignInPassword);
-
-//        editTextPassword = Objects.requireNonNull(textInputLayoutPassword.getEditText()).findViewById(R.id.et_signin_password);
-//        editTextPhoneNumber = Objects.requireNonNull(textInputLayoutPhoneNumber.getEditText()).findViewById(R.id.et_signin_phoneNumber);
-
-//        editTextPassword = textInputLayoutPassword.getEditText().findViewById(R.id.et_signin_password);
-//        editTextPhoneNumber = textInputLayoutPhoneNumber.getEditText().findViewById(R.id.et_signin_phoneNumber);
-
-
-//        try {
-//            sqLiteDatabaseHelper.createDataBase();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if (validate()) {
 
-
                 String PhoneNumber = editTextPhoneNumber.getText().toString();
                 String Password = editTextPassword.getText().toString();
 
-
-
 //                sqLiteDatabaseHelper.openDataBase();
-               db = smartDvorDatabaseHelper.getWritableDatabase();
+                db = smartDvorDatabaseHelper.getWritableDatabase();
 
-                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, "street1", "2", "4");
+                boolean checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
-                if (insertData) {
-                    Toast.makeText(LoginFragment.this.requireContext(), "Succes data insert", Toast.LENGTH_LONG).show();
+//                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, "street1", "2", "4");
+
+                if (checkUser) {
+                    Toast.makeText(LoginFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(LoginFragment.this.requireContext(), "Wrong data insert", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
                 }
 
 //                sqLiteDatabaseHelper.close();
@@ -138,32 +119,20 @@ public class LoginFragment extends Fragment {
 //        mDb = sqLiteDatabaseHelper.getWritableDatabase();
 
         //Найдем компоненты в XML разметке
-        txtv1 = rootView.findViewById(R.id.txtPhoneNumber);
-        txtv2 = rootView.findViewById(R.id.txtPassword);
-//        textView2 = (TextView) findViewById(R.id.textView2);
 
-//        editTextPhoneNumber = editTextPhoneNumber.findViewById(R.id.et_signin_phoneNumber);
-//        editTextPassword = editTextPassword.findViewById(R.id.et_signin_password);
-//        btnLogin = btnLogin.findViewById(R.id.btn_signin);
 
-        //Пропишем обработчик клика кнопки
-//        btnShow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String product = "";
-//                String product1 = "";
-//                Cursor cursor = mDb.query("CLIENTS", new String[] {"_id", "phoneNumber", "password","street","houseNumber","apartNumber"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
-//                cursor.moveToFirst();
-//                while (!cursor.isAfterLast()) {
-//                    product += cursor.getString(0) + " | ";
-//                    product1 += cursor.getString(1) + " | ";
-//                    txtv1.setText(product);
-//                    txtv2.setText(product1);
-//                    cursor.moveToNext();
-//                }
-//                cursor.close();
-//            }
-//        });
+
+//        showData(rootView);
+
+        return rootView;
+    }
+
+    private void showData(@NonNull View view) {
+
+        Button btnShow = view.findViewById(R.id.btn_show);
+
+        txtv1 = view.findViewById(R.id.txtPhoneNumber);
+        txtv2 = view.findViewById(R.id.txtPassword);
 
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,9 +157,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-
-//        addData();
-        return rootView;
     }
 
 //    public void addData() {
