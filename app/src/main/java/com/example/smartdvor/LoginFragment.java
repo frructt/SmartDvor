@@ -34,6 +34,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -51,8 +52,7 @@ public class LoginFragment extends Fragment {
 //    TextInputLayout textInputLayoutPassword;
 
 //    DatabaseHelper databaseHelper;
-//
-    SQLiteDatabaseHelper sqLiteDatabaseHelper;
+
     private SQLiteDatabase db;
     private SmartDvorDatabaseHelper smartDvorDatabaseHelper;
 //    com.example.dvor.SmartDvorDatabaseHelper sqliteHelper;
@@ -89,7 +89,9 @@ public class LoginFragment extends Fragment {
                 String Password = editTextPassword.getText().toString();
 
 //                sqLiteDatabaseHelper.openDataBase();
-                db = smartDvorDatabaseHelper.getWritableDatabase();
+                db = smartDvorDatabaseHelper.getReadableDatabase();
+
+//                Map <String, String> checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
                 boolean checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
@@ -101,6 +103,13 @@ public class LoginFragment extends Fragment {
                 else {
                     Toast.makeText(LoginFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
                 }
+
+//                if (Objects.equals(checkUser.get("PHONENUMBER"), PhoneNumber) && Objects.equals(checkUser.get("PASSWORD"), Password)) {
+//                    Toast.makeText(LoginFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
+//                }
+//                else {
+//                    Toast.makeText(LoginFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
+//                }
 
 //                sqLiteDatabaseHelper.close();
 
@@ -122,7 +131,7 @@ public class LoginFragment extends Fragment {
 
 
 
-//        showData(rootView);
+        showData(rootView);
 
         return rootView;
     }
