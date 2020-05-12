@@ -111,7 +111,7 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean checkCorrectUsersAuthentificationData(SQLiteDatabase db, String phoneNumber, String password) {
         //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getWritableDatabase();
-        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "NAME=?", new String[]{phoneNumber,password}, null, null, null);
+        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber,password}, null, null, null);
         cursor.moveToFirst();
         if (phoneNumber.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
             cursor.close();
