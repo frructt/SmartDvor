@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -85,6 +87,17 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button btn_signout = (Button) findViewById(R.id.btn_signout);
+
+        btn_signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void addCar(View view) {
@@ -112,6 +125,9 @@ public class ProfileActivity extends AppCompatActivity {
         selectedGuestCars.clear();
         adapter.notifyDataSetChanged();
     }
+
+
+
 
 
 }

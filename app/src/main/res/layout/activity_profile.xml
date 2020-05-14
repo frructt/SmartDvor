@@ -192,18 +192,18 @@
                 android:text="sign out"
                 android:fontFamily="@font/montserrat_semibold"
                 android:textSize="25sp"
-                android:textColor="@color/colorMainFont" />
+                android:textColor="@color/colorMainFont"/>
 
-            <Button
-                android:id="@+id/btn_delete_user"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner"
-                android:layout_marginStart="200dp"
-                android:text="delete"
-                android:fontFamily="@font/montserrat_semibold"
-                android:textSize="25sp"
-                android:textColor="@color/colorMainFont" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_delete_user"-->
+<!--                android:layout_width="160dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/round_corner"-->
+<!--                android:layout_marginStart="200dp"-->
+<!--                android:text="delete"-->
+<!--                android:fontFamily="@font/montserrat_semibold"-->
+<!--                android:textSize="25sp"-->
+<!--                android:textColor="@color/colorMainFont" />-->
 
         </RelativeLayout>
 
