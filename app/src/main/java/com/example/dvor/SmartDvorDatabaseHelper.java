@@ -26,10 +26,6 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
     //мы используем его для создания таблицы и вставки данных
     @Override
     public void onCreate(SQLiteDatabase db) {
-       /*
-       //db.execSQL("CREATE TABLE DRINK (_id INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, IMAGE_TESOURCE_ID INTEGER);");
-       // insertProfilesData(db, "UserName", "Some Info about Me", R.drawable.ic_launcher_background); //Метод, где происходит добавление данных в базу данных.
-       */
         updateMyDatabase(db, 0, DB_VERSION);
     }
 
@@ -39,22 +35,6 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, 0, DB_VERSION);
     }
 
-
-    /*
-     *Метод, в котором будет происходить постоянное добавление данных
-     *Суть: пользователь кидает какие то поля данных, мы их принимаем
-     * и закидываем в этот класс. Здесь в этом классе будет вызываться база данных и соответственно в нее
-     *помещаться данные.
-     *Все входные данные являются шаблонными. Необходимо разработать примерное видение и менять параметры
-     *Дедлайн на определение базы данных - пятница 1 мая.
-     */
-//    private static void insertProfilesData(SQLiteDatabase db, String name, String description, int resourceId){
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("NAME", name); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
-//        contentValues.put("DESCRIPTION", description);
-//        contentValues.put("IMAGE_RESOURCE_ID", resourceId);
-//        db.insert("DRINK", null, contentValues);
-//    }
     public boolean insertClientsData(SQLiteDatabase db, String phoneNumber, String password, String street, String houseNumber, String apartNumber) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("phoneNumber", phoneNumber); //.put кладет в определенное поле данные. Надо таким образом заполнить все поля строки
@@ -78,36 +58,7 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
                     "STREET TEXT, " +
                     "HOUSENUMBER TEXT, " +
                     "APARTNUMBER TEXT);");
-//            insertProfilesData(db, "Latte", "Espresso and steamed milk", R.drawable.background_splash);
-//            insertClientsData(db, "+71234567890", "User111", "Pushlinskaya","1", "1");
         }
-
-//        if (oldVersion == 1) {
-//            db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-//                    "PHONENUMBER TEXT, " +
-//                    "PASSWORD TEXT, " +
-//                    "STREET TEXT, " +
-//                    "HOUSENUMBER TEXT, " +
-//                    "APARTNUMBER TEXT);");
-//        }
-/*
-        if(oldVersion < 2){
-            //
-            //                *   Код добавления нового столбца
-            //                *   Этот код выполняется, в том случае,
-            //                *   если у пользователя уже установлена
-            //                *   версия 1 б.д.
-            //
-            //            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
-            db.execSQL("CREATE TABLE CLIENTS(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "PHONENUMBER TEXT, " +
-                    "PASSWORD TEXT, " +
-                    "STREET TEXT, "+
-                    "HOUSENUMBER TEXT, "+
-                    "APARTNUMBER TEXT);");
-            //NUMERIC -> добавление числового столбца
-        }
-        */
 
     }
 
@@ -115,8 +66,6 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
         //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getWritableDatabase();
         String dbPhone = null;
         String dbPass = null;
-//        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber,password}, null, null, null);
-//        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
         Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber}, null, null, null);
         if(cursor.moveToFirst()){
             dbPhone = cursor.getString(0);
@@ -139,7 +88,6 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
         String password = null;
         String houseNumber = null;
         String apartNumber = null;
-//        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
         Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, "PHONENUMBER=?", new String[]{phoneNumber}, null, null, null);
         if(cursor.moveToFirst()){
             _id = cursor.getString(0);

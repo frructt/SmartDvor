@@ -88,18 +88,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void addCar(View view) {
-        TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.textInputLayoutGuestCars);
         TextInputEditText editTextGuestCar = (TextInputEditText) findViewById(R.id.et_guest_car);
         String car = Objects.requireNonNull(editTextGuestCar.getText()).toString();
 
         if (!car.isEmpty() && !guestCars.contains(car)) {
             adapter.add(car);
-            Toast.makeText(this, ("SUCCESS" + car.contains(car)), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, ("SUCCESS" + car.contains(car)), Toast.LENGTH_LONG).show();
             editTextGuestCar.setText("");
             adapter.notifyDataSetChanged();
         }
         else {
-            Toast.makeText(this, ("FAILED" + guestCars.contains(car) + "-----" + car.isEmpty()), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, ("FAILED" + guestCars.contains(car) + "-----" + car.isEmpty()), Toast.LENGTH_LONG).show();
         }
 
     }

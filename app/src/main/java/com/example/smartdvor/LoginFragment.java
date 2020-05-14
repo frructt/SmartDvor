@@ -10,34 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.strictmode.SqliteObjectLeakedViolation;
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dvor.DatabaseHelper;
-import com.example.dvor.SQLiteDatabaseHelper;
 import com.example.dvor.SmartDvorDatabaseHelper;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
-
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 
 public class LoginFragment extends Fragment {
 
@@ -49,14 +30,8 @@ public class LoginFragment extends Fragment {
 
     private Button btnLogin;
 
-//    TextInputLayout textInputLayoutPhoneNumber;
-//    TextInputLayout textInputLayoutPassword;
-
-//    DatabaseHelper databaseHelper;
-
     private SQLiteDatabase db;
     private SmartDvorDatabaseHelper smartDvorDatabaseHelper;
-//    com.example.dvor.SmartDvorDatabaseHelper sqliteHelper;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -67,14 +42,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        // Inflate the layout for this fragment
-
-//        initViews();
-
-//        sqLiteDatabaseHelper = new SQLiteDatabaseHelper(this.requireContext());
         smartDvorDatabaseHelper = new SmartDvorDatabaseHelper(this.requireContext());
-
-//        sqLiteDatabaseHelper.insertClientsData("+79991234567", "pswd1", "street", "2a", 10);
 
         editTextPhoneNumber = rootView.findViewById(R.id.et_signin_phoneNumber);
         editTextPassword = rootView.findViewById(R.id.et_signin_password);
@@ -84,137 +52,62 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (validate()) {
 
                 String PhoneNumber = editTextPhoneNumber.getText().toString();
                 String Password = editTextPassword.getText().toString();
 
-//                sqLiteDatabaseHelper.openDataBase();
                 db = smartDvorDatabaseHelper.getReadableDatabase();
-
-//                Map <String, String> checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
                 boolean checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
-//                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, "street1", "2", "4");
-
                 if (checkUser) {
-//                    Toast.makeText(LoginFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
-
                     Intent intent = new Intent(getActivity(), ProfileActivity.class);
                     startActivity(intent);
                 }
                 else {
                     Toast.makeText(LoginFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
                 }
-
-//                if (Objects.equals(checkUser.get("PHONENUMBER"), PhoneNumber) && Objects.equals(checkUser.get("PASSWORD"), Password)) {
-//                    Toast.makeText(LoginFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
-//                }
-//                else {
-//                    Toast.makeText(LoginFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
-//                }
-
-//                sqLiteDatabaseHelper.close();
-
-//                    User currentUser = sqliteHelper.Authenticate(new User(null, PhoneNumber, Password, null, null, null));
-
-//                    if (currentUser != null) {
-//                        Snackbar.make(btnLogin, "Sucess Logged", Snackbar.LENGTH_LONG).show();
-//                        // Sart home activity here
-//                    } else {
-//                        Snackbar.make(btnLogin, "Unsacess logged. Try again", Snackbar.LENGTH_LONG).show();
-//                    }
-//                }
             }
         });
 
-//        mDb = sqLiteDatabaseHelper.getWritableDatabase();
-
-        //Найдем компоненты в XML разметке
-
-
-
-        showData(rootView);
+//        showData(rootView);
 
         return rootView;
     }
 
-    private void showData(@NonNull View view) {
-
-        Button btnShow = view.findViewById(R.id.btn_show);
-
-        txtv1 = view.findViewById(R.id.txtPhoneNumber);
-        txtv2 = view.findViewById(R.id.txtPassword);
-
-        btnShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    //Код чтения данных из базы
-                    SQLiteDatabase db = smartDvorDatabaseHelper.getReadableDatabase();
-                    String product = "";
-                    String product1 = "";
-                    Cursor cursor = db.query("CLIENTS", new String[]{"_id", "phoneNumber", "password", "street", "houseNumber", "apartNumber"}, "_id = ?", new String[]{Integer.toString(1)}, null, null, null);
-                    cursor.moveToFirst();
-                    while (!cursor.isAfterLast()) {
-                        product += cursor.getString(1) + " | ";
-                        product1 += cursor.getString(2) + " | ";
-                        txtv1.setText(product);
-                        txtv2.setText(product1);
-                        cursor.moveToNext();
-                    }
-                    cursor.close();
-                } catch (SQLiteException e) {
-                    Toast.makeText(LoginFragment.this.requireContext(), "Database unavailable", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-//    public void addData() {
-//        sqLiteDatabaseHelper = new SQLiteDatabaseHelper(this.requireContext());
+//    private void showData(@NonNull View view) {
 //
-//        mDb = sqLiteDatabaseHelper.getWritableDatabase();
+//        Button btnShow = view.findViewById(R.id.btn_show);
 //
-//        //Найдем компоненты в XML разметке
-//        txtv1 = txtv1.findViewById(R.id.txtPhoneNumber);
-//        txtv2 = txtv2.findViewById(R.id.txtPassword);
-////        textView2 = (TextView) findViewById(R.id.textView2);
+//        txtv1 = view.findViewById(R.id.txtPhoneNumber);
+//        txtv2 = view.findViewById(R.id.txtPassword);
 //
-////        editTextPhoneNumber = editTextPhoneNumber.findViewById(R.id.et_signin_phoneNumber);
-////        editTextPassword = editTextPassword.findViewById(R.id.et_signin_password);
-//        btnLogin = btnLogin.findViewById(R.id.btn_signin);
-//
-//        //Пропишем обработчик клика кнопки
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//        btnShow.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                String product = "";
-//                String product1 = "";
-//                Cursor cursor = mDb.query("CLIENTS", new String[] {"_id", "phoneNumber", "password","street","houseNumber","apartNumber"},"_id = ?", new String[] {Integer.toString(1)}, null, null, null);
-//                cursor.moveToFirst();
-//                while (!cursor.isAfterLast()) {
-//                    product += cursor.getString(0) + " | ";
-//                    product1 += cursor.getString(1) + " | ";
-//                    txtv1.setText(product);
-//                    txtv2.setText(product1);
-//                    cursor.moveToNext();
+//                try {
+//                    //Код чтения данных из базы
+//                    SQLiteDatabase db = smartDvorDatabaseHelper.getReadableDatabase();
+//                    String product = "";
+//                    String product1 = "";
+//                    Cursor cursor = db.query("CLIENTS", new String[]{"_id", "phoneNumber", "password", "street", "houseNumber", "apartNumber"}, "_id = ?", new String[]{Integer.toString(1)}, null, null, null);
+//                    cursor.moveToFirst();
+//                    while (!cursor.isAfterLast()) {
+//                        product += cursor.getString(1) + " | ";
+//                        product1 += cursor.getString(2) + " | ";
+//                        txtv1.setText(product);
+//                        txtv2.setText(product1);
+//                        cursor.moveToNext();
+//                    }
+//                    cursor.close();
+//                } catch (SQLiteException e) {
+//                    Toast.makeText(LoginFragment.this.requireContext(), "Database unavailable", Toast.LENGTH_SHORT).show();
 //                }
-//                cursor.close();
 //            }
 //        });
 //    }
 
 
-//    private void initViews() {
-//        editTextPhoneNumber = editTextPhoneNumber.findViewById(R.id.et_phoneNumber);
-//        editTextPassword = editTextPassword.findViewById(R.id.et_password);
-//        textInputLayoutPhoneNumber = textInputLayoutPhoneNumber.findViewById(R.id.textInputLayoutPhoneNumber);
-//        textInputLayoutPassword = textInputLayoutPassword.findViewById(R.id.textInputLayoutPassword);
-//        btnLogin = btnLogin.findViewById(R.id.btn_signin);
-//    }
-//
 //    public boolean validate() {
 //        boolean valid = false;
 //

@@ -30,25 +30,4 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         fragmentList.add(fragment);
     }
 
-//    @NonNull
-//    @Override
-//    public Fragment getItem(int position) {
-//
-//        switch (position) {
-//            case 0:
-//                LoginFragment loginFragment = new LoginFragment();
-//                return loginFragment;
-//            case 1:
-//                RegisterFragment registerFragment = new RegisterFragment();
-//                return registerFragment;
-//            default:
-//                return null;
-//        }
-//
-//    }
-//
-//    @Override
-//    public int getCount() {
-//        return 0;
-//    }
 }

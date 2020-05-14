@@ -27,12 +27,6 @@ public class RegisterFragment extends Fragment {
 
     private Button btnRegister;
 
-//    TextInputLayout textInputLayoutPhoneNumber;
-//    TextInputLayout textInputLayoutPassword;
-//    TextInputLayout textInputLayoutStreet;
-//    TextInputLayout textInputLayoutHouseNumber;
-//    TextInputLayout textInputLayoutApartment;
-
     private SmartDvorDatabaseHelper smartDvorDatabaseHelper;
     private SQLiteDatabase db;
 
@@ -68,8 +62,6 @@ public class RegisterFragment extends Fragment {
 
                 boolean checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
-//                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, "street1", "2", "4");
-
                 if (checkUser) {
                     Toast.makeText(RegisterFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
                 }
@@ -83,7 +75,6 @@ public class RegisterFragment extends Fragment {
 
                         Intent intent = new Intent(getActivity(), ProfileActivity.class);
                         startActivity(intent);
-//                        insert data here
                     }
                     else {
                         Toast.makeText(RegisterFragment.this.requireContext(), "Wrong sign up", Toast.LENGTH_LONG).show();
