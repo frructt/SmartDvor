@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProfileActivity"
+    android:background="@color/colorBackground"
+    android:fillViewport="true">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/tableLayout">
+
+        <ImageView
+            android:id="@+id/logo_big"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/logo_big" />
+
+        <Button
+            android:id="@+id/btn_open"
+            android:layout_width="250dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="120dp"
+            android:layout_weight="0.9"
+            android:background="@drawable/round_corner"
+            android:text="open"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textSize="30sp"
+            android:textColor="@color/colorMainFont" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/guest_cars"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:text="guest cars"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="25sp"
+                android:textColor="@color/colorMainFont"
+                android:gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.65"
+                android:orientation="horizontal"
+                android:layout_marginRight="10dp">
+
+<!--                <EditText-->
+<!--                    android:id="@+id/et_guest_car"-->
+<!--                    android:layout_weight="4"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutGuestCars"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="3"
+                    android:textColorHint="@color/colorLightFont">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_guest_car"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_corner"
+                        android:fontFamily="@font/montserrat_light"
+                        android:hint="like РП543Б"
+                        android:inputType="text"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/colorLightFont"
+                        android:textSize="22sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner"
+                    android:text="+"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:textSize="25sp"
+                    android:textColor="@color/colorMainFont"
+                    android:onClick="addCar"/>
+
+                <Button
+                    android:id="@+id/btn_delete_car"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner"
+                    android:layout_marginStart="30dp"
+                    android:text="-"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:textSize="25sp"
+                    android:textColor="@color/colorMainFont"
+                    android:onClick="removeCar"/>
+
+            </LinearLayout>
+
+            <ListView
+                android:choiceMode="multipleChoice"
+                android:id="@+id/guestCarsList"
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="0dp"
+                android:cacheColorHint="@color/colorMainFont" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center|bottom"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/my_cars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="my cars"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="25sp"
+                android:textColor="@color/colorMainFont"
+                android:gravity="center_horizontal"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutMyCars"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColorHint="@color/colorLightFont"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_my_car"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_corner"
+                    android:fontFamily="@font/montserrat_light"
+                    android:hint="like РП543Б"
+                    android:inputType="none"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/colorLightFont"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/signout_delete"
+            android:gravity="center_horizontal"
+            android:paddingTop="50dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/btn_signout"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corner"
+                android:text="sign out"
+                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="25sp"
+                android:textColor="@color/colorMainFont" />
+
+            <Button
+                android:id="@+id/btn_delete_user"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corner"
+                android:layout_marginStart="200dp"
+                android:text="delete"
+                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="25sp"
+                android:textColor="@color/colorMainFont" />
+
+        </RelativeLayout>
+
+    </TableLayout>
+</ScrollView>

@@ -1,5 +1,6 @@
 package com.example.smartdvor;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -65,13 +66,28 @@ public class RegisterFragment extends Fragment {
 
                 db = smartDvorDatabaseHelper.getWritableDatabase();
 
-                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, Street, HouseNumber, Apartment);
+                boolean checkUser = smartDvorDatabaseHelper.checkCorrectUsersAuthentificationData(db, PhoneNumber, Password);
 
-                if (insertData) {
-                    Toast.makeText(RegisterFragment.this.requireContext(), "Succes sign up", Toast.LENGTH_LONG).show();
+//                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, "street1", "2", "4");
+
+                if (checkUser) {
+                    Toast.makeText(RegisterFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(RegisterFragment.this.requireContext(), "Wrong sign up", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(RegisterFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
+
+                    boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, Street, HouseNumber, Apartment);
+
+                    if (insertData) {
+                        Toast.makeText(RegisterFragment.this.requireContext(), "Success sign up", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                        startActivity(intent);
+//                        insert data here
+                    }
+                    else {
+                        Toast.makeText(RegisterFragment.this.requireContext(), "Wrong sign up", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

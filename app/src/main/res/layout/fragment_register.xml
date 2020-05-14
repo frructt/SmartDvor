@@ -13,7 +13,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1" >
+        android:stretchColumns="1">
 
         <ImageView
             android:id="@+id/logo_big"
@@ -163,7 +163,6 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="100dp"
             android:background="@drawable/round_corner"
-            android:onClick="onRegisterButtonClick"
             android:text="@string/sign_up"
             android:fontFamily="@font/montserrat_semibold"
             android:textSize="25sp"

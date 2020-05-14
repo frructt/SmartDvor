@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.smartdvor.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,11 +116,11 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
         String dbPhone = null;
         String dbPass = null;
 //        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber,password}, null, null, null);
-        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
-
+//        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
+        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber}, null, null, null);
         if(cursor.moveToFirst()){
-            dbPhone = cursor.getString(1);
-            dbPass = cursor.getString(2);
+            dbPhone = cursor.getString(0);
+            dbPass = cursor.getString(1);
         }
         if (phoneNumber.equals(dbPhone) && password.equals(dbPass)) {
             cursor.close();
@@ -129,38 +131,16 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-//    public Map<String, String> checkCorrectUsersAuthentificationData(SQLiteDatabase db, String phoneNumber, String password) {
-//        //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getWritableDatabase();
-//        String dbPhone = null;
-//        String dbPass = null;
-//        Cursor cursor = db.query("CLIENTS", new String[]{"PHONENUMBER", "PASSWORD"}, "PHONENUMBER=?", new String[]{phoneNumber,password}, null, null, null);
-//        if(cursor.moveToFirst()){
-//            dbPhone = cursor.getString(0);
-//            dbPass = cursor.getString(1);
-//        }
-////        if (phoneNumber.equals(dbPhone) && password.equals(dbPass)) {
-////            cursor.close();
-////            return true;
-////        } else {
-////            cursor.close();
-////            return false;
-////        }
-//        Map<String, String> getAllData = new HashMap<String, String>();
-//        getAllData.put("PHONENUMBER",dbPhone );
-//        getAllData.put("PASSWORD",dbPass );
-//        cursor.close();
-//        //Возвращается map
-//        return getAllData;
-//
-//    }
 
-    public Map<String, String> getAllUserDataInformation(SQLiteDatabase db, String phoneNumber, String password){
+    public User getAllUserDataInformation(SQLiteDatabase db, String phoneNumber){
         //Перед тем, как зайти в метод. Необходимо убедиться, что б.д. имеет SQLiteDatabase db = SmartDvorDatabaseHelper.getReadableDatabase();
         String _id = null;
-        String street = null;;
-        String houseNumber = null;;
-        String apartNumber = null;;
-        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
+        String street = null;
+        String password = null;
+        String houseNumber = null;
+        String apartNumber = null;
+//        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, null, null, null, null, null);
+        Cursor cursor = db.query("CLIENTS", new String[] {"_id","PHONENUMBER","PASSWORD","STREET","HOUSENUMBER","APARTNUMBER"}, "PHONENUMBER=?", new String[]{phoneNumber}, null, null, null);
         if(cursor.moveToFirst()){
             _id = cursor.getString(0);
             phoneNumber = cursor.getString(1);
@@ -169,24 +149,10 @@ public class SmartDvorDatabaseHelper extends SQLiteOpenHelper {
             houseNumber = cursor.getString(4);
             apartNumber = cursor.getString(5);
         }
-//        HashMap<String, Integer> myHashMap = new HashMap<String, Integer>(){{
-//            put("a", 0);
-//            put("b", 20);
-//            put("d", 30);
-//            put("c", 40);
-//        }};
-        Map<String, String> getAllData = new HashMap<String, String>();
-        getAllData.put("_id",_id );
-        getAllData.put("PHONENUMBER",phoneNumber);
-        getAllData.put("PASSWORD",password);
-        getAllData.put("STREET",street);
-        getAllData.put("HOUSENUMBER",houseNumber);
-        getAllData.put("APARTNUMBER",apartNumber);
-        cursor.close();
-        //Возвращается map
-        return getAllData;
+        return new User(phoneNumber,password,street,houseNumber,apartNumber);
     }
 }
+
 
 /*
 * Выборка всех данных из таблицы

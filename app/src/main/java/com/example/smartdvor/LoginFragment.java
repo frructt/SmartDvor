@@ -1,5 +1,6 @@
 package com.example.smartdvor;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -98,7 +99,10 @@ public class LoginFragment extends Fragment {
 //                boolean insertData = smartDvorDatabaseHelper.insertClientsData(db, PhoneNumber, Password, "street1", "2", "4");
 
                 if (checkUser) {
-                    Toast.makeText(LoginFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(LoginFragment.this.requireContext(), "You are already sign up", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(LoginFragment.this.requireContext(), "You do not have an account yet", Toast.LENGTH_LONG).show();
